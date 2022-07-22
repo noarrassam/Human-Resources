@@ -1,7 +1,19 @@
+import React, { useState, useContext } from "react";
+import GlobalContext from "./store/appStore";
+
 export default function Info() {
+  const context = useContext(GlobalContext);
+  const [formData, setFormData] = useState("");
+  console.log(formData);
+
   return (
     <>
       <div className="table-responsive-md">
+        <input
+          type="text"
+          placeholder="Search by First Name"
+          onChange={(e: any) => setFormData(e.target.value)}
+        />
         <table className="table table-bordered table-hover table-striped table-info">
           <thead>
             <tr className="tr">
@@ -16,15 +28,24 @@ export default function Info() {
             </tr>
           </thead>
           <tbody>
-            {/* <tr key={i}>
-              <td>{item.fname}</td>
-              <td>{item.lname}</td>
-              <td>{item.username}</td>
-              <td>{item.gender}</td>
-              <td>{item.role}</td>
-              <td>{item.address}</td>
-              <td>{item.email}</td>
-            </tr> */}
+            {context.arrUsers
+              .filter((user) =>
+                user.Firstname.toLowerCase().includes(formData)
+              )
+              .map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item.Firstname}</td>
+                    <td>{item.Lastname}</td>
+                    <td>{item.Username}</td>
+                    <td>{item.Gender}</td>
+                    <td>{item.Email}</td>
+                    <td>{item.Department}</td>
+                    <td>{item.Designation}</td>
+                    <td>{item.Salary}</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

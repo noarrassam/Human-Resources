@@ -1,15 +1,6 @@
-import React, { useState } from "react";
-
-interface Data {
-  Firstname: string;
-  Lastname: string;
-  Username: string;
-  Gender: string;
-  Email: string;
-  Department: string;
-  Designation: string;
-  Salary: string;
-}
+import React, { useState, useContext } from "react";
+import { Data } from "./store/appStore";
+import GlobalContext from "./store/appStore";
 
 export default function Register() {
   const defaultData: Data = {
@@ -24,6 +15,7 @@ export default function Register() {
   };
 
   const [formData, setFormData] = useState<Data>(defaultData);
+  const context = useContext(GlobalContext);
 
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
     const name = e.target as HTMLInputElement;
@@ -38,6 +30,7 @@ export default function Register() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    context.arrUsers.push(formData);
     console.log(formData);
   }
 
