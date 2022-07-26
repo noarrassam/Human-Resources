@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Data } from "./store/appStore";
 import GlobalContext from "./store/appStore";
+import axios from "axios";
 
 export default function Register() {
   const defaultData: Data = {
@@ -28,10 +29,20 @@ export default function Register() {
     });
   }
 
+  function handleAxios() {
+    axios
+      .post("http://localhost:3001/api/users", formData)
+      .then(() => console.log("User Created"))
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    context.arrUsers.push(formData);
-    console.log(formData);
+    handleAxios();
+    // context.arrUsers.push(formData);
+    // console.log(formData);
   }
 
   return (

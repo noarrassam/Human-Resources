@@ -1,10 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import GlobalContext from "./store/appStore";
+import axios from "axios";
 
 export default function Info() {
   const context = useContext(GlobalContext);
   const [formData, setFormData] = useState("");
+  const [user, getUser] = useState([]);
   console.log(formData);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/users")
+      .then((res) => getUser(res.data.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -28,14 +39,16 @@ export default function Info() {
             </tr>
           </thead>
           <tbody>
-            {context.arrUsers
-              .filter((user) =>
+            {user
+              .filter((user: any) =>
                 user.Firstname.toLowerCase().includes(formData)
               )
-              .map((item, i) => {
+              .map((item: any, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item.Firstname}</td>
+                    <td>
+                      <a href="">{item.Firstname}</a>
+                    </td>
                     <td>{item.Lastname}</td>
                     <td>{item.Username}</td>
                     <td>{item.Gender}</td>
