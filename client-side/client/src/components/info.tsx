@@ -4,18 +4,65 @@ import axios from "axios";
 
 export default function Info() {
   const context = useContext(GlobalContext);
-  const [formData, setFormData] = useState("");
-  const [user, getUser] = useState([]);
-  console.log(formData);
+  const [user, setUser] = useState<any[]>([]);
+  const [filteredUser, setFilteredUser] = useState<any[]>([]);
+  const [filterCriteria, setFilterCriteria] = useState<any>({
+    CaseSensitive: false,
+    ExactMatch: true,
+  });
+
+  const filteredColumn: string[] = [
+    "Firstname",
+    "Lastname",
+    "Username",
+    "Gender",
+    "Email",
+    "Salary",
+  ];
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/users")
-      .then((res) => getUser(res.data.data))
+      .then((res) => {
+        setUser(res.data.data);
+        setFilteredUser(res.data.data);
+      })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const filterChange = (event: any) => {
+    let val: string = event.target.value;
+    if (!filterCriteria.caseSensitive) {
+      val = val.toString().toLowerCase();
+    }
+    let arrData: any[] = [];
+    if (val) {
+      arrData = user.filter((user: any) => {
+        for (const field of filteredColumn) {
+          let value: any = user[field];
+          if (!filterCriteria.caseSensitive) {
+            value = value.toString().toLowerCase();
+          }
+          if (filterCriteria.exactMatch) {
+            if (value === val) {
+              return true;
+            }
+          } else {
+            if (value.includes(val)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });
+    } else {
+      arrData = user;
+    }
+    setFilteredUser(arrData);
+  };
+
 
   return (
     <>
@@ -23,7 +70,7 @@ export default function Info() {
         <input
           type="text"
           placeholder="Search by First Name"
-          onChange={(e: any) => setFormData(e.target.value)}
+          onChange={filterChange}
         />
         <table className="table table-bordered table-hover table-striped table-info">
           <thead>
@@ -39,26 +86,22 @@ export default function Info() {
             </tr>
           </thead>
           <tbody>
-            {user
-              .filter((user: any) =>
-                user.Firstname.toLowerCase().includes(formData)
-              )
-              .map((item: any, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      <a href="">{item.Firstname}</a>
-                    </td>
-                    <td>{item.Lastname}</td>
-                    <td>{item.Username}</td>
-                    <td>{item.Gender}</td>
-                    <td>{item.Email}</td>
-                    <td>{item.Department}</td>
-                    <td>{item.Designation}</td>
-                    <td>{item.Salary}</td>
-                  </tr>
-                );
-              })}
+            {filteredUser.map((item: any, i) => {
+              return (
+                <tr key={i}>
+                  <td>
+                    <a href="./details">{item.Firstname}</a>
+                  </td>
+                  <td>{item.Lastname}</td>
+                  <td>{item.Username}</td>
+                  <td>{item.Gender}</td>
+                  <td>{item.Email}</td>
+                  <td>{item.Department}</td>
+                  <td>{item.Designation}</td>
+                  <td>{item.Salary}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

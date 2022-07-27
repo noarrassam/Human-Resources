@@ -29,7 +29,7 @@ export default function Register() {
     });
   }
 
-  function handleAxios() {
+  function handleDataFetch() {
     axios
       .post("http://localhost:3001/api/users", formData)
       .then(() => console.log("User Created"))
@@ -40,7 +40,7 @@ export default function Register() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    handleAxios();
+    handleDataFetch();
     // context.arrUsers.push(formData);
     // console.log(formData);
   }
