@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import GlobalContext from "./store/appStore";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Info() {
   const context = useContext(GlobalContext);
@@ -63,7 +64,6 @@ export default function Info() {
     setFilteredUser(arrData);
   };
 
-
   return (
     <>
       <div className="table-responsive-md">
@@ -90,7 +90,9 @@ export default function Info() {
               return (
                 <tr key={i}>
                   <td>
-                    <a href="./details">{item.Firstname}</a>
+                    <Link to={"/details/" + `${item.id}`}>
+                      {item.Firstname}
+                    </Link>
                   </td>
                   <td>{item.Lastname}</td>
                   <td>{item.Username}</td>

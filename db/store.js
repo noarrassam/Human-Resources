@@ -34,6 +34,8 @@ class Store {
       Username,
       Gender,
       Email,
+      Password,
+      RePassword,
       Department,
       Designation,
       Salary,
@@ -45,6 +47,8 @@ class Store {
       !Username ||
       !Gender ||
       !Email ||
+      !Password ||
+      !RePassword ||
       !Department ||
       !Designation ||
       !Salary
@@ -58,6 +62,8 @@ class Store {
       Username,
       Gender,
       Email,
+      Password,
+      RePassword,
       Department,
       Designation,
       Salary,

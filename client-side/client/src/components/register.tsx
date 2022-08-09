@@ -10,6 +10,8 @@ export default function Register() {
     Username: "",
     Gender: "",
     Email: "",
+    Password: "",
+    RePassword: "",
     Department: "",
     Designation: "",
     Salary: "",
@@ -30,12 +32,20 @@ export default function Register() {
   }
 
   function handleDataFetch() {
-    axios
-      .post("http://localhost:3001/api/users", formData)
-      .then(() => console.log("User Created"))
-      .catch((err) => {
-        console.log(err);
-      });
+    if (formData.Password !== formData.RePassword) {
+      alert("Password does not match");
+    } else {
+      axios
+        .post("http://localhost:3001/api/users", formData)
+        .then(() => {
+          console.log(formData);
+          context.arrUsers.push(formData);
+          setFormData(defaultData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -105,6 +115,28 @@ export default function Register() {
               id="email"
               name="Email"
               value={formData.Email}
+              onChange={handleOnChange}
+            />
+            <br />
+            Password:
+            <br />
+            <input
+              type="password"
+              required
+              id="password"
+              name="Password"
+              value={formData.Password}
+              onChange={handleOnChange}
+            />
+            <br />
+            Re-Password:
+            <br />
+            <input
+              type="password"
+              required
+              id="repass"
+              name="RePassword"
+              value={formData.RePassword}
               onChange={handleOnChange}
             />
             <br />

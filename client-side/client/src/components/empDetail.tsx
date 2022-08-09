@@ -1,36 +1,79 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-interface Details {
-  age: string;
-  phone: number;
-  bank: string;
-  dop: string;
-}
+export default function EmployeeDetail(props: any) {
+  const [file, setFile] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [data, setData] = useState([]);
 
-export default function EmployeeDetail() {
-  const users: Details = {
-    age: "",
-    phone: 0,
-    bank: "",
-    dop: "",
+  const handleOnSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("category", categoryName);
+    //formData.append("employeeId", props.data);
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+
+    try {
+      const res: any = await axios.post(
+        "http://localhost:3001/upload",
+        formData,
+        config
+      );
+      console.log(res);
+      //setData([...data,res.data]);
+    } catch (res) {
+      console.log(res);
+    }
   };
 
-  const [formData, setFormData] = useState<Details>(users);
-  const [userDetail, setUserDetails] = useState([formData]);
+  // const [user, setUser] = useState<any[]>([]);
 
-  function handleOnSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setFormData((prevState) => {
-      return {
-        ...prevState,
-      };
-    });
-  }
-  //form data
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3001/api/users")
+  //     .then((res) => {
+  //       setUser(res.data.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
+  const donwloadFile = (event: any) => {
+    try {
+      const fileName: string = "app.docx";
+      window.open("http://localhost:3001/upload/download/" + fileName);
+      //axios.get("http://localhost:3001/upload/download/" + fileName);
+    } catch (res) {
+      console.log(res);
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleOnSubmit}>
-        <input type="file" name="myFiles" multiple />
+        <div>
+          <input
+            type="file"
+            multiple
+            onChange={(e: any) => setFile(e.target.files[0])}
+          />
+        </div>
+        <div>
+          File Name:
+          <input
+            type="text"
+            value={categoryName}
+            onChange={(e: any) => setCategoryName(e.target.value)}
+          />
+        </div>
+        <div>
+          <button>Submit</button>
+        </div>
       </form>
       <div>
         <table className="table table-bordered table-hover table-striped table-info">
@@ -42,16 +85,13 @@ export default function EmployeeDetail() {
             </tr>
           </thead>
           <tbody>
-            {formData &&
-              userDetail.map((item: any, i: number) => {
-                return (
-                  <tr key={i}>
-                    <td>{item.Lastname}</td>
-                    <td>{item.Username}</td>
-                    <td>{item.Gender}</td>
-                  </tr>
-                );
-              })}
+            <tr>
+              <td>{props.data}</td>
+              <td></td>
+              <td>
+                <button onClick={donwloadFile}>Download</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
