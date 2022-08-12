@@ -24,12 +24,10 @@ function App() {
 
   return (
     <GlobalContext.Provider value={state}>
-      <div>
-        <BrowserRouter>
-          <Login />
-          <RoutesInfo />
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Login />
+        <RoutesInfo />
+      </BrowserRouter>
     </GlobalContext.Provider>
   );
 }

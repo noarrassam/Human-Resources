@@ -28,7 +28,7 @@ class Store {
   }
 
   addFiles(formData) {
-    const { filename, categoryName } = formData;
+    const { filename, categoryName, employeeId } = formData;
 
     if (!filename) {
       throw new Error("fileName Cannot be blank");
@@ -37,7 +37,11 @@ class Store {
       throw new Error("categoryName Cannot be blank");
     }
 
-    const newFormData = { filename, categoryName, id: uuidv1 };
+    if (!employeeId) {
+      throw new Error("employeeId Cannot be blank");
+    }
+
+    const newFormData = { filename, categoryName, employeeId, id: uuidv1() };
 
     return this.getFiles()
       .then((files) => [...files, newFormData])

@@ -1,13 +1,15 @@
 const router = require("express").Router();
+const store = require("../../dbUploadFiles/store");
 const datas = require("../../dbUploadFiles/store");
-//const db = require("../../dbUploadFiles/db.json");
+const db = require("../../dbUploadFiles/db.json");
 
 router.route("/").post((req, res) => {
   const file = req.files.file;
   console.log(file);
   const filename = file.name;
   const categoryName = req.body.category;
-  const filesAndDatas = { filename, categoryName };
+  const employeeId = req.body.employeeId;
+  const filesAndDatas = { filename, categoryName, employeeId };
   console.log(categoryName);
 
   try {
@@ -36,13 +38,44 @@ router.route("/").post((req, res) => {
   }
 });
 
-router.route("/download/:fileName").get((req, res) => {
+router.route("/download/:fileName/:employeeId").get(async (req, res) => {
   const fileName = req.params.fileName;
   console.log(fileName);
   const filePath = "./uploads/" + fileName;
   console.log(fileName);
-  //res.setHeader("Content-Disposition", "attachment; " + fileName);
-  res.download(filePath);
+  const id = req.params.employeeId;
+  const found = db.find((emp) => emp.employeeId == id);
+  if (!found) {
+    res.status(401).json({
+      success: false,
+    });
+  } else {
+    res.status(201).json({
+      success: true,
+      data: await store.getFiles(),
+      files: res.download(filePath),
+    });
+  }
 });
+
+// router.route("/download/:employeeId").get(async (req, res) => {
+//   const fileName = req.params.fileName;
+//   console.log(fileName);
+//   const filePath = "./uploads/" + fileName;
+//   console.log(fileName);
+//   const id = req.params.employeeId;
+//   const found = db.find((emp) => emp.id == id);
+//   if (!found) {
+//     res.status(401).json({
+//       success: false,
+//     });
+//   } else {
+//     res.status(201).json({
+//       success: true,
+//       data: await store.getFiles(),
+//       files: res.download(filePath),
+//     });
+//   }
+// });
 
 module.exports = router;

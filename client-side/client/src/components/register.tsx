@@ -19,6 +19,9 @@ export default function Register() {
 
   const [formData, setFormData] = useState<Data>(defaultData);
   const context = useContext(GlobalContext);
+  if (formData.Username) {
+    console.log("-----------------", formData);
+  }
 
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
     const name = e.target as HTMLInputElement;
