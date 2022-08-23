@@ -12,6 +12,8 @@ import Login from "./login";
 import axios from "axios";
 import PrivateRoutes from "./privateRoutes";
 import GlobalContext from "./store/appStore";
+import ForgetPassword from "./forgetPass";
+import ChangePass from "./changePass";
 
 function Details() {
   const params = useParams();
@@ -45,10 +47,14 @@ export default function RoutesInfo() {
       <Route element={<PrivateRoutes />}>
         <Route path="/register" element={<Register />} />
         <Route path="/info" element={<Info />} />
+
         {isAuth && <Route path="/details/:userId" element={<Details />} />}
       </Route>
-
-      <Route path="/" element={<Login />} />
+      <Route>
+        <Route path="/" element={<Login />} />{" "}
+        <Route path="/forgetPass" element={<ForgetPassword />}></Route>
+        <Route path="/changePass" element={<ChangePass />}></Route>
+      </Route>
     </Routes>
   );
 }

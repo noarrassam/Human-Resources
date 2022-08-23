@@ -15,10 +15,11 @@ export default function EmployeeDetail(props: any) {
   const fetchData = () => {
     const empId = props.data;
     axios({
-      url: "http://localhost:3001/upload/download/fileName/" + empId,
+      url: "http://localhost:3001/upload/download/" + empId,
       method: "GET",
     })
       .then((res) => {
+        console.log(res);
         const arrData: any[] = res.data.data;
         setData([...arrData]);
       })
@@ -34,6 +35,20 @@ export default function EmployeeDetail(props: any) {
     }
   };
 
+  const deleteData = (item: any) => {
+    axios({
+      url: "http://localhost:3001/upload/info/" + item.id,
+      method: "delete",
+    })
+      .then((res) => {
+        fetchData();
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleOnSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
@@ -43,10 +58,18 @@ export default function EmployeeDetail(props: any) {
     const config = {
       headers: { "content-type": "multipart/form-data" },
     };
-    await axios.post("http://localhost:3001/upload", formData, config);
-    fetchData();
+    const res: any = await axios.post(
+      "http://localhost:3001/upload",
+      formData,
+      config
+    );
+    console.log("---------------------", res);
+    if (res && res.data && res.data.status) {
+      setTimeout(() => {
+        fetchData();
+      }, 500);
+    }
   };
-
   return (
     <>
       <form onSubmit={handleOnSubmit}>
@@ -76,6 +99,7 @@ export default function EmployeeDetail(props: any) {
               <th scope="col">Employee ID</th>
               <th scope="col">Category</th>
               <th scope="col">File (Hyperlink)</th>
+              <th scope="col">Remove</th>
             </tr>
           </thead>
           <tbody>
@@ -89,6 +113,9 @@ export default function EmployeeDetail(props: any) {
                       <button onClick={() => donwloadFile(item)}>
                         Download
                       </button>
+                    </td>
+                    <td>
+                      <button onClick={() => deleteData(item)}>Delete</button>
                     </td>
                   </tr>
                 );

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import GlobalContext from "./store/appStore";
 import axios from "axios";
 
@@ -14,10 +14,7 @@ const Login = () => {
     Password: "",
   });
 
-  const [form, setForm] = useState();
-
   const context = useContext(GlobalContext);
-  const data = context.arrUsers;
 
   const navigate = useNavigate();
   function handleFormOnChange(e: React.FormEvent<HTMLInputElement>) {
@@ -39,10 +36,12 @@ const Login = () => {
       axios
         .get("http://localhost:3001/api/users")
         .then((res) => {
-          console.log(res.data.data);
+          console.log(res);
           //context.loginUserIndex = -1;
           //context.isAuth = false;
           context.setState({ isAuth: false, loginUserIndex: -1 });
+          console.log(res.data);
+
           res.data.data.forEach((item: any, i: number) => {
             if (
               item.Username === state.Username &&
@@ -97,7 +96,8 @@ const Login = () => {
             >
               Login
             </button>
-          </form>
+          </form>{" "}
+          <Link to={"/forgetPass"}>Forget Password</Link>
         </div>
       </div>
     </div>

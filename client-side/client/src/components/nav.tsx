@@ -1,14 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import GlobalContext from "./store/appStore";
-import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   let context = useContext(GlobalContext);
   let isAuth: boolean = context.isAuth;
   console.log(context.isAuth);
 
-  function handleOnChange() {
+  function handleOnClick() {
     context.setState({ isAuth: false, loginUserIndex: -1 });
   }
 
@@ -24,7 +23,7 @@ export default function Home() {
         ) : (
           <>
             <li className="nav-item active">
-              <Link className="nav-link" to="/" onClick={handleOnChange}>
+              <Link className="nav-link" to="/" onClick={handleOnClick}>
                 Logout
               </Link>
             </li>

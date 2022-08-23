@@ -29,6 +29,8 @@ class Store {
 
   addUser(note) {
     const {
+      Person,
+      isAdmin,
       Firstname,
       Lastname,
       Username,
@@ -42,6 +44,8 @@ class Store {
     } = note;
 
     if (
+      !Person ||
+      !isAdmin ||
       !Firstname ||
       !Lastname ||
       !Username ||
@@ -57,6 +61,8 @@ class Store {
     }
 
     const newUser = {
+      Person,
+      isAdmin,
       Firstname,
       Lastname,
       Username,

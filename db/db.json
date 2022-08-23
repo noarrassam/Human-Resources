@@ -1,1 +1,44 @@
-[{"Firstname":"Noar","Lastname":"Rassam","Username":"noorrassam","Gender":"Male","Email":"noor.s.rassam@gmail.com","Password":"1234","RePassword":"1234","Department":"IT","Designation":"Developer","Salary":"5000","id":"00b85e60-12a5-11ed-bb27-0fca3456e0d4"},{"Firstname":"Admin","Lastname":"Admin","Username":"admin","Gender":"Male","Email":"admin@gmail.com","Password":"12345","RePassword":"12345","Department":"IT","Designation":"Developer","Salary":"5000","id":"a91954a0-12ba-11ed-87a6-c3a5a4e4776c"},{"Firstname":"Noar","Lastname":"Rassam","Username":"admin","Gender":"Male","Email":"noor.s.rassam@gmail.com","Password":"1234","RePassword":"1234","Department":"IT","Designation":"Developer","Salary":"5000","id":"30587ad0-12bc-11ed-aaa5-9ff2fa4563cb"}]
+[
+  {
+    "Person": "Admin",
+    "Firstname": "Admin",
+    "Lastname": "Admin",
+    "Username": "admin",
+    "Gender": "Male",
+    "Email": "admin@gmail.com",
+    "Password": "12345",
+    "RePassword": "12345",
+    "Department": "IT",
+    "Designation": "Developer",
+    "Salary": "5000",
+    "id": "a91954a0-12ba-11ed-87a6-c3a5a4e4776c"
+  },
+  {
+    "Person": "Admin",
+    "Firstname": "Noar",
+    "Lastname": "Rassam",
+    "Username": "admin",
+    "Gender": "Male",
+    "Email": "noar.s.rassam@gmail.com",
+    "Password": "12345",
+    "RePassword": "12345",
+    "Department": "IT",
+    "Designation": "Editor",
+    "Salary": "3345",
+    "id": "255a2160-1dc5-11ed-98c2-2f00cfac967e"
+  },
+  {
+    "Person": "Employee",
+    "Firstname": "Noar",
+    "Lastname": "Rassam",
+    "Username": "noorrassam",
+    "Gender": "Male",
+    "Email": "noor.s.rassam@gmail.com",
+    "Password": "12345",
+    "RePassword": "12345",
+    "Department": "IT",
+    "Designation": "Developer",
+    "Salary": "345345",
+    "id": "6b0d9b10-1dc5-11ed-8ff2-379f433f8416"
+  }
+]

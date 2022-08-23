@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default function Register() {
   const defaultData: Data = {
+    Person: "",
     Firstname: "",
     Lastname: "",
     Username: "",
@@ -18,14 +19,16 @@ export default function Register() {
   };
 
   const [formData, setFormData] = useState<Data>(defaultData);
+  //console.log(!formData.isAdmin);
+
   const context = useContext(GlobalContext);
   if (formData.Username) {
     console.log("-----------------", formData);
   }
 
-  function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
-    const name = e.target as HTMLInputElement;
-    const value = e.target as HTMLInputElement;
+  function handleOnChange(e: any) {
+    const name = e.target as any;
+    const value = e.target as any;
     setFormData((prevState) => {
       return {
         ...prevState,
@@ -63,6 +66,21 @@ export default function Register() {
       <div className="row my-3">
         <div className="col-lg-2">
           <form onSubmit={handleSubmit}>
+            <label>
+              Select Person Type:
+              <br />
+              <select
+                name="Person"
+                onChange={handleOnChange}
+                value={formData.Person}
+              >
+                <option>Select</option>
+                <option value="Admin">Admin</option>
+                <option value="Employee">Employee</option>
+              </select>
+            </label>
+            <br />
+            <br />
             <label>Firstname:</label> <br />
             <input
               type="text"
@@ -121,28 +139,31 @@ export default function Register() {
               onChange={handleOnChange}
             />
             <br />
-            Password:
-            <br />
-            <input
-              type="password"
-              required
-              id="password"
-              name="Password"
-              value={formData.Password}
-              onChange={handleOnChange}
-            />
-            <br />
-            Re-Password:
-            <br />
-            <input
-              type="password"
-              required
-              id="repass"
-              name="RePassword"
-              value={formData.RePassword}
-              onChange={handleOnChange}
-            />
-            <br />
+            {formData.Person === "Admin" && (
+              <div>
+                Password:
+                <br />
+                <input
+                  type="password"
+                  required
+                  id="password"
+                  name="Password"
+                  value={formData.Password}
+                  onChange={handleOnChange}
+                />
+                <br />
+                Re-Password:
+                <br />
+                <input
+                  type="password"
+                  required
+                  id="repass"
+                  name="RePassword"
+                  value={formData.RePassword}
+                  onChange={handleOnChange}
+                />
+              </div>
+            )}
             Department:
             <br />
             <input

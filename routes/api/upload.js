@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const store = require("../../dbUploadFiles/store");
 const datas = require("../../dbUploadFiles/store");
+const dataFiles = require("../../mongoDB/mongoDbFiles/store");
 const db = require("../../dbUploadFiles/db.json");
 
-router.route("/").post((req, res) => {
+router.route("/").post(async (req, res) => {
   const file = req.files.file;
   console.log(file);
   const filename = file.name;
@@ -29,7 +30,7 @@ router.route("/").post((req, res) => {
           mimetype: file.mimetype,
           size: file.size,
         },
-        files: datas.addFiles(filesAndDatas),
+        files: await dataFiles.addFiles(filesAndDatas),
       });
     }
   } catch (err) {
@@ -38,44 +39,53 @@ router.route("/").post((req, res) => {
   }
 });
 
-router.route("/download/:fileName/:employeeId").get(async (req, res) => {
-  const fileName = req.params.fileName;
-  console.log(fileName);
-  const filePath = "./uploads/" + fileName;
-  console.log(fileName);
-  const id = req.params.employeeId;
-  const found = db.find((emp) => emp.employeeId == id);
-  if (!found) {
-    res.status(401).json({
-      success: false,
-    });
-  } else {
+router.route("/download/:employeeId").get(async (req, res) => {
+  // const id = req.params.employeeId;
+  // const dbID = dataFiles.getFiles();
+  // const found = db.find((emp) => {
+  //   console.log(emp);
+  //   return emp.employeeId == id;
+  // });
+  // if (!found) {
+  //   res.status(401).json({
+  //     success: false,
+  //   });
+  // } else {
+  if (res) {
     res.status(201).json({
       success: true,
-      data: await store.getFiles(),
-      files: res.download(filePath),
+      data: await dataFiles.getFiles(),
+    });
+  } else {
+    res.status(500).json({
+      success: false,
     });
   }
+  // }
 });
 
-// router.route("/download/:employeeId").get(async (req, res) => {
-//   const fileName = req.params.fileName;
-//   console.log(fileName);
-//   const filePath = "./uploads/" + fileName;
-//   console.log(fileName);
-//   const id = req.params.employeeId;
-//   const found = db.find((emp) => emp.id == id);
-//   if (!found) {
-//     res.status(401).json({
-//       success: false,
-//     });
-//   } else {
-//     res.status(201).json({
-//       success: true,
-//       data: await store.getFiles(),
-//       files: res.download(filePath),
-//     });
-//   }
-// });
+router.route("/info/:id").delete(async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const ret = await dataFiles.removeFiles(id);
+
+  console.log(ret);
+  if (ret.deletedCount) {
+    res.status(201).json({ success: true, data: ret });
+  } else {
+    res.status(500).json({ success: false });
+  }
+  /*let arr = await dataFiles.database();
+  let array = [...arr];
+  console.log(array);
+  const found = array.find((data) => data.id === id);
+  console.log(found);
+  if (!found) {
+    res.status(401).json({ success: false });
+  } else {
+    const ret = await dataFiles.removeFiles(id);
+    res.status(201).json({ success: true, data: ret });
+  }*/
+});
 
 module.exports = router;
