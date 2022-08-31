@@ -34,13 +34,26 @@ const Login = () => {
       alert("Empty Username or Password");
     } else {
       axios
-        .get("http://localhost:3001/api/users")
-        .then((res) => {
-          console.log(res);
+        .post("http://localhost:3001/api/auth", state)
+        .then((res: any) => {
+          if (res.data) {
+            localStorage.setItem("token", res.data.token);
+            context.setState({
+              isAuth: true,
+              user: res.data.user,
+              token: res.data.token,
+            });
+            console.log(context.loginUserIndex);
+            navigate("./info", { replace: true });
+          } else {
+            console.error("Failed Login ", res);
+          }
+
+          /*console.log(res.data.data);
           //context.loginUserIndex = -1;
           //context.isAuth = false;
           context.setState({ isAuth: false, loginUserIndex: -1 });
-          console.log(res.data);
+          console.log(res.data.data);
 
           res.data.data.forEach((item: any, i: number) => {
             if (
@@ -53,7 +66,7 @@ const Login = () => {
               console.log(context.loginUserIndex);
               navigate("./info", { replace: true });
             }
-          });
+          });*/
 
           /*if (context.loginUserIndex === -1) {
             alert("Username or password is incorrect");

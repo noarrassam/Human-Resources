@@ -1,5 +1,8 @@
 const mongoClient = require("mongodb").MongoClient;
 const uuidv1 = require("uuid/v1");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const url = "mongodb://localhost:27017/";
 
@@ -24,7 +27,7 @@ class UserStore {
     });
   }
 
-  addUser(note) {
+  async addUser(note) {
     console.log(note);
     const {
       Person,
@@ -39,22 +42,6 @@ class UserStore {
       Designation,
       Salary,
     } = note;
-
-    /*if (
-      !Person ||
-      !Firstname ||
-      !Lastname ||
-      !Username ||
-      !Gender ||
-      !Email ||
-      !Password ||
-      !RePassword ||
-      !Department ||
-      !Designation ||
-      !Salary
-    ) {
-      throw new Error("Cannot be blank");
-    }*/
 
     const newUser = {
       Person,
@@ -71,21 +58,46 @@ class UserStore {
       id: uuidv1(),
     };
 
-    mongoClient.connect(url, function (err, db) {
-      if (err) {
-        throw err;
-      }
-      var database = db.db("hrdb");
-      database.collection("users").insertOne(newUser, function (err, res) {
-        if (err) {
-          throw err;
-        }
-        console.log(newUser + " inserted");
-        db.close();
-      });
-    });
+    const salt = await bcrypt.genSalt(10);
+    newUser.Password = await bcrypt.hash(Password, salt);
+    newUser.RePassword = await bcrypt.hash(RePassword, salt);
 
-    return newUser;
+    const payload = {
+      user: {
+        id: newUser.id,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      config.get("jwtSecret"),
+      {
+        expiresIn: 360000,
+      },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+
+    return new Promise((resolve, reject) => {
+      mongoClient.connect(url, function (err, db) {
+        if (err) {
+          reject(err);
+        }
+        var database = db.db("hrdb");
+        database.collection("users").insertOne(newUser, function (err, res) {
+          if (err) {
+            reject(err);
+          }
+          console.log(newUser + " inserted");
+          db.close();
+          resolve(res);
+        });
+      });
+
+      return newUser;
+    });
   }
 
   getUsers() {
@@ -108,6 +120,50 @@ class UserStore {
             db.close();
             resolve(result);
           });
+      });
+    });
+  }
+
+  getUsername(Username) {
+    return new Promise((resolve, reject) => {
+      mongoClient.connect(url, function (err, db) {
+        if (err) {
+          console.error(err);
+          reject(err);
+        }
+
+        let database = db.db("hrdb");
+        database
+          .collection("users")
+          .findOne({ Username }, function (err, result) {
+            if (err) {
+              reject(err);
+            }
+            console.log(result);
+            db.close();
+            resolve(result);
+          });
+      });
+    });
+  }
+
+  getEmail(Email) {
+    return new Promise((resolve, reject) => {
+      mongoClient.connect(url, function (err, db) {
+        if (err) {
+          console.error(err);
+          reject(err);
+        }
+
+        let database = db.db("hrdb");
+        database.collection("users").findOne({ Email }, function (err, result) {
+          if (err) {
+            reject(err);
+          }
+          console.log(result);
+          db.close();
+          resolve(result);
+        });
       });
     });
   }

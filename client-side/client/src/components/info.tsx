@@ -22,8 +22,13 @@ export default function Info() {
   ];
 
   useEffect(() => {
+    const config: any = {
+      headers: {
+        Authorization: "Bearer " + context.token,
+      },
+    };
     axios
-      .get("http://localhost:3001/api/users")
+      .get("http://localhost:3001/api/users", config)
       .then((res) => {
         setUser(res.data.data);
         setFilteredUser(res.data.data);

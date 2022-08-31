@@ -93,26 +93,6 @@ class FileStore {
       });
     });
   }
-
-  // database() {
-  //   return new Promise((resolve, reject) => {
-  //     mongoClient.connect(url, function (err, db) {
-  //       if (err) {
-  //         reject(err);
-  //       }
-  //       var database = db.db("hrdb");
-  //       database
-  //         .collection("userFiles")
-  //         .find({})
-  //         .toArray((err, data) => {
-  //           if (err) {
-  //             reject(err);
-  //           }
-  //           resolve(data);
-  //         });
-  //     });
-  //   });
-  // }
 }
 
 module.exports = new FileStore();

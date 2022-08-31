@@ -18,6 +18,8 @@ export interface IStateType {
   arrUsers: Data[];
   loginUserIndex: number;
   isAuth: boolean;
+  token?: string;
+  user?: any;
   setState?: any;
 }
 
