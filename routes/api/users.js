@@ -71,7 +71,7 @@ router
           .json({ success: true, data: await UserStore.addUser(req.body) });
         //.json({ success: true, data: await store.addUser(req.body) });
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   );

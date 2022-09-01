@@ -76,4 +76,73 @@ router
     }
   );
 
+/*router.route("/register").post(
+  [
+    check("Firstname", "Firstname is required").not().isEmpty(),
+    check("Lastname", "Lastname is required").not().isEmpty(),
+    check("Username", "Username is required").not().isEmpty(),
+    check("Gender", "Gender is required").not().isEmpty(),
+    check("Email", "Please include a valid Email").isEmail(),
+    check("Department", "Department is required").not().isEmpty(),
+    check("Designation", "Designation is required").not().isEmpty(),
+    check("Salary", "Salary is required").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(500).json({ errors: errors.array() });
+    }
+
+    const {
+      Firstname,
+      Lastname,
+      Username,
+      Gender,
+      Email,
+      Password,
+      RePassword,
+      Department,
+      Designation,
+      Salary,
+    } = req.body;
+
+    try {
+      let user = await UserStore.getUsername(Username);
+      let email = await UserStore.getEmail(Email);
+      console.log(user);
+      if (user || email) {
+        return res
+          .status(500)
+          .json({ msg: "Username Or Email already exists" });
+      }
+      res
+        .status(201)
+        .json({ success: true, data: await UserStore.addUser(req.body) });
+      //.json({ success: true, data: await store.addUser(req.body) });
+
+      // const payload = {
+      //   user: {
+      //     id: req.body,
+      //   },
+      // };
+      // console.log("----------------", process.env.JWT_SECRET);
+      // jwt.sign(
+      //   req.body,
+      //   process.env.JWT_SECRET,
+      //   {
+      //     expiresIn: 360000,
+      //   },
+      //   (err, token) => {
+      //     if (err) throw err;
+      //     user.Password = null;
+      //     res.json({ token, user });
+      //   }
+      // );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);*/
+
 module.exports = router;

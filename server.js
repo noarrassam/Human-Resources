@@ -40,7 +40,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
-app.use("/upload", uploads);
+app.use("/upload",jwtAuthenticate, uploads);
 
 app.use(logger);
 const PORT = process.env.PORT | 3001;

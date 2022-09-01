@@ -1,12 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import GlobalContext from "./store/appStore";
 const FileDownload = require("js-file-download");
 
 export default function EmployeeDetail(props: any) {
   const [file, setFile] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [data, setData] = useState<any[]>([]);
-
+  const context = useContext(GlobalContext);
   console.log(data);
   useEffect(() => {
     fetchData();
@@ -14,10 +15,14 @@ export default function EmployeeDetail(props: any) {
 
   const fetchData = () => {
     const empId = props.data;
-    axios({
-      url: "http://localhost:3001/upload/download/" + empId,
-      method: "GET",
-    })
+    const config: any = {
+      headers: {
+        Authorization: "Bearer " + context.token,
+      },
+    };
+
+    axios
+      .get("http://localhost:3001/upload/download/" + empId, config)
       .then((res) => {
         console.log(res);
         const arrData: any[] = res.data.data;
@@ -36,10 +41,14 @@ export default function EmployeeDetail(props: any) {
   };
 
   const deleteData = (item: any) => {
-    axios({
-      url: "http://localhost:3001/upload/info/" + item.id,
-      method: "delete",
-    })
+    const config: any = {
+      headers: {
+        Authorization: "Bearer " + context.token,
+      },
+    };
+
+    axios
+      .delete("http://localhost:3001/upload/info/" + item.id, config)
       .then((res) => {
         fetchData();
         console.log(res);
@@ -55,8 +64,11 @@ export default function EmployeeDetail(props: any) {
     formData.append("file", file);
     formData.append("category", categoryName);
     formData.append("employeeId", props.data);
-    const config = {
-      headers: { "content-type": "multipart/form-data" },
+    const config: any = {
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: "Bearer " + context.token,
+      },
     };
     const res: any = await axios.post(
       "http://localhost:3001/upload",

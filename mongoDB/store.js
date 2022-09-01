@@ -62,24 +62,6 @@ class UserStore {
     newUser.Password = await bcrypt.hash(Password, salt);
     newUser.RePassword = await bcrypt.hash(RePassword, salt);
 
-    const payload = {
-      user: {
-        id: newUser.id,
-      },
-    };
-
-    jwt.sign(
-      payload,
-      config.get("jwtSecret"),
-      {
-        expiresIn: 360000,
-      },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-
     return new Promise((resolve, reject) => {
       mongoClient.connect(url, function (err, db) {
         if (err) {

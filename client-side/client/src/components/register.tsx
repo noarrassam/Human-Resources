@@ -41,15 +41,20 @@ export default function Register() {
     if (formData.Password !== formData.RePassword) {
       alert("Password does not match");
     } else {
+      const config: any = {
+        headers: {
+          Authorization: "Bearer " + context.token,
+        },
+      };
       axios
-        .post("http://localhost:3001/api/users", formData)
+        .post("http://localhost:3001/api/users", formData, config)
         .then(() => {
           console.log(formData);
           context.arrUsers.push(formData);
           setFormData(defaultData);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     }
   }
