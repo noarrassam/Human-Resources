@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcryptjs": "^2.4.3",
     "concurrently": "^7.3.0",
     "config": "^3.3.7",
@@ -31,5 +32,10 @@
     "path": "^0.12.7",
     "util": "^0.12.4",
     "uuidv1": "^1.6.14"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }

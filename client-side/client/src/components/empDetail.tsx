@@ -8,6 +8,11 @@ export default function EmployeeDetail(props: any) {
   const [categoryName, setCategoryName] = useState("");
   const [data, setData] = useState<any[]>([]);
   const context = useContext(GlobalContext);
+  const config: any = {
+    headers: {
+      Authorization: "Bearer " + context.token,
+    },
+  };
   console.log(data);
   useEffect(() => {
     fetchData();
@@ -15,12 +20,6 @@ export default function EmployeeDetail(props: any) {
 
   const fetchData = () => {
     const empId = props.data;
-    const config: any = {
-      headers: {
-        Authorization: "Bearer " + context.token,
-      },
-    };
-
     axios
       .get("http://localhost:3001/upload/download/" + empId, config)
       .then((res) => {
@@ -41,12 +40,6 @@ export default function EmployeeDetail(props: any) {
   };
 
   const deleteData = (item: any) => {
-    const config: any = {
-      headers: {
-        Authorization: "Bearer " + context.token,
-      },
-    };
-
     axios
       .delete("http://localhost:3001/upload/info/" + item.id, config)
       .then((res) => {

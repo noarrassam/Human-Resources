@@ -28,11 +28,11 @@ router
       check("Gender", "Gender is required").not().isEmpty(),
       check("Email", "Please include a valid Email").isEmail(),
       check("Password", "Please include a valid Password")
-        .optional()
-        .isLength({ min: 6 }),
+        .optional(),
+        //.isLength({ min: 6 }),
       check("RePassword", "Please include a valid RePassword")
-        .optional()
-        .isLength({ min: 6 }),
+        .optional(),
+        //.isLength({ min: 6 }),
       check("Department", "Department is required").not().isEmpty(),
       check("Designation", "Designation is required").not().isEmpty(),
       check("Salary", "Salary is required").not().isEmpty(),

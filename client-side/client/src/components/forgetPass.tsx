@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import Userfront from "@userfront/core";
 import axios from "axios";
-
-Userfront.init("demo1234");
 
 interface Data {
   email: string;
@@ -29,20 +26,9 @@ export default function ForgetPassword() {
   function handleOnSubmit(e: any) {
     e.preventDefault();
     axios
-      .get("http://localhost:3001/api/users")
+      .post("http://localhost:3001/api/resetPass", { Email: state.email })
       .then((res) => {
-        res.data.data.forEach((item: any, i: any) => {
-          //console.log(item);
-          if (item.Person === "Admin") {
-            //console.log(true);
-            if (state.email === item.Email) {
-              //Userfront.sendResetLink(state.email);
-              Userfront.resetPassword({
-                password: "admin",
-              });
-            }
-          }
-        });
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
