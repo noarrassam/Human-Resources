@@ -30,6 +30,8 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 
 - Routing
 
+- Password Hash => bcrypt
+
 ## **Login Page**
 
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/1.png)
