@@ -29,14 +29,14 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 ## **Login Page**
 
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/1.png)
-![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/2.png)
 
 ## **Forget Password - Send Email**
 
-![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/4.png)
+![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/2.png)
 
 ## **Registration Form- Admin | Employee**
 
+![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/4.png)
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/5.png)
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/6.png)
 
