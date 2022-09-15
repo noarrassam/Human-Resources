@@ -51,7 +51,6 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 ## **Upload a File - Clicking on a Name - Hyperlink**
 
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/8.png)
-![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/8.png)
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/9.png)
 
 ## **Edit Admin's Profile**
