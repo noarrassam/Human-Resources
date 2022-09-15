@@ -18,6 +18,8 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 
 - Routes
 
+- Private Routes
+
 - Forms
 
 - React Hooks: useState, useEffect, useContext
@@ -31,10 +33,6 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 - Validation => express-validator
 
 - sendGrid => sending emails
-
-- Routing
-
-- Private Routes
 
 - Password Hash => bcryptjs
 
