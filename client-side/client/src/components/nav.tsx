@@ -37,6 +37,11 @@ export default function Home() {
                 All Employees
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/adminProfile/">
+                Admin Profile
+              </Link>
+            </li>
           </>
         )}
       </ul>

@@ -30,12 +30,15 @@ const Login = () => {
 
   function onValidation(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    context.loginUserIndex = -1;
     if (state.Username === "" || state.Password === "") {
       alert("Empty Username or Password");
     } else {
       axios
         .post("http://localhost:3001/api/auth", state)
         .then((res: any) => {
+          console.log(res.data.user);
+
           if (res.data) {
             localStorage.setItem("token", res.data.token);
             context.setState({
@@ -43,34 +46,12 @@ const Login = () => {
               user: res.data.user,
               token: res.data.token,
             });
+
             console.log(context.loginUserIndex);
             navigate("./info", { replace: true });
           } else {
             console.error("Failed Login ", res);
           }
-
-          /*console.log(res.data.data);
-          //context.loginUserIndex = -1;
-          //context.isAuth = false;
-          context.setState({ isAuth: false, loginUserIndex: -1 });
-          console.log(res.data.data);
-
-          res.data.data.forEach((item: any, i: number) => {
-            if (
-              item.Username === state.Username &&
-              item.Password === state.Password
-            ) {
-              //context.isAuth = true;
-              //context.loginUserIndex = i;
-              context.setState({ isAuth: true, loginUserIndex: i });
-              console.log(context.loginUserIndex);
-              navigate("./info", { replace: true });
-            }
-          });*/
-
-          /*if (context.loginUserIndex === -1) {
-            alert("Username or password is incorrect");
-          }*/
         })
         .catch((err) => {
           console.log(err);

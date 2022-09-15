@@ -21,6 +21,7 @@ export interface IStateType {
   token?: string;
   user?: any;
   setState?: any;
+  userId?: any;
 }
 
 export const defaultContextValue: IStateType = {
