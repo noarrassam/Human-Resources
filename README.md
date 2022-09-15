@@ -34,7 +34,7 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 
 - Routing
 
-- Password Hash => bcrypt
+- Password Hash => bcryptjs
 
 ## **Login Page**
 
