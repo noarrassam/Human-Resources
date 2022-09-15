@@ -4,7 +4,7 @@
 
 ## Description
 
-It is a Full Stack app for Human Resources to Register Employees and add upload their information details through files using React TypeScript in the Frontend to Node, Express, MongoDB in the backend.
+It is a Full Stack app for Human Resources to Register Employees and upload their information details through files using React TypeScript in the Frontend to Node, Express, MongoDB in the backend.
 
 ## Used
 
