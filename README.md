@@ -22,6 +22,10 @@ It is a Full Stack app for Human Resources to Register Employees and add upload 
 
 - React Hooks: useState, useEffect, useContext
 
+- Axios
+
+- formData
+
 - JWT
 
 - Validation => express-validator
