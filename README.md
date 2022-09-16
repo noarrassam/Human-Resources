@@ -62,3 +62,9 @@ It is a Full Stack app for Human Resources to Register Employees and upload thei
 ## **Edit Admin's Profile**
 
 ![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/10.png)
+
+## **MongoDB Compass**
+
+![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/11.png)
+![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/12.png)
+![![Directory]()](https://github.com/noarrassam/Human-Resources/blob/main/images/13.png)
